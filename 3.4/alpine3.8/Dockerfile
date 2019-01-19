@@ -20,6 +20,8 @@ RUN apk add --no-cache ca-certificates
 ENV GPG_KEY 97FC712E4C024BBEA48A61ED3A5CA953F73C700D
 ENV PYTHON_VERSION 3.4.9
 
+COPY dtrace /usr/local/bin/
+COPY sdt*.h /usr/include/sys/
 RUN set -ex \
 	&& apk add --no-cache --virtual .fetch-deps \
 		gnupg \
@@ -52,6 +54,7 @@ RUN set -ex \
 		make \
 		ncurses-dev \
 		pax-utils \
+		python \
 		readline-dev \
 		sqlite-dev \
 		tcl-dev \
@@ -71,6 +74,7 @@ RUN set -ex \
 		--with-system-expat \
 		--with-system-ffi \
 		--without-ensurepip \
+		--with-dtrace \
 	&& make -j "$(nproc)" \
 # set thread stack size to 1MB so we don't segfault before we hit sys.getrecursionlimit()
 # https://github.com/alpinelinux/aports/commit/2026e1259422d4e0cf92391ca2d3844356c649d0

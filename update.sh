@@ -152,6 +152,12 @@ for version in "${versions[@]}"; do
 			wheezy) sed -ri -e 's/dpkg-architecture --query /dpkg-architecture -q/g' "$dir/Dockerfile" ;;
 		esac
 
+		if [[ "$v" == alpine* ]]; then
+			cp sdt.h "$dir"
+			cp sdt-config.h "$dir"
+			cp dtrace "$dir"
+		fi
+
 		if [[ "$v" == alpine* ]] && [ "$v" != 'alpine3.6' ]; then
 			# https://github.com/docker-library/python/pull/307
 			# on Alpine 3.6 it's necessary to install libressl to get working HTTPS with wget (and ca-certificates for Python's runtime), but later versions don't require this (support for both is baked into the base)
