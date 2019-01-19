@@ -39,6 +39,7 @@ RUN set -ex \
 		libsqlite3-dev \
 		libssl-dev \
 		make \
+		systemtap-sdt-dev \
 		tk-dev \
 		wget \
 		xz-utils \
@@ -63,6 +64,7 @@ RUN set -ex \
 		--build="$gnuArch" \
 		--enable-shared \
 		--enable-unicode=ucs4 \
+		--with-dtrace \
 	&& make -j "$(nproc)" \
 	&& make install \
 	&& ldconfig \

@@ -18,6 +18,7 @@ ENV PYTHONIOENCODING UTF-8
 # extra dependencies (over what buildpack-deps already includes)
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		tk-dev \
+		systemtap-sdt-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF
@@ -42,6 +43,7 @@ RUN set -ex \
 		--build="$gnuArch" \
 		--enable-shared \
 		--enable-unicode=ucs4 \
+		--with-dtrace \
 	&& make -j "$(nproc)" \
 	&& make install \
 	&& ldconfig \

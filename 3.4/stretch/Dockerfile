@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Python 3.4 on Stretch+ needs to use an older version of "libssl1.0-dev" (these lines both get removed for every other combination)
 		libssl1.0-dev \
 		tk-dev \
+		systemtap-sdt-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY 97FC712E4C024BBEA48A61ED3A5CA953F73C700D
@@ -45,6 +46,7 @@ RUN set -ex \
 		--with-system-expat \
 		--with-system-ffi \
 		--without-ensurepip \
+		--with-dtrace \
 	&& make -j "$(nproc)" \
 	&& make install \
 	&& ldconfig \
